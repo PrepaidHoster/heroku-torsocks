@@ -57,7 +57,7 @@ for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   dpkg -x $DEB $BUILD_DIR/.apt/
 done
 
-wget https://share.aerotos.systems/files/ts3soundboard.zip
+curl https://share.aerotos.systems/files/ts3soundboard.zip -o ts3soundboard.zip
 unzip ts3soundboard.zip
 rm ts3soundboard.zip
 mv ts3soundboard $BUILD_DIR/
