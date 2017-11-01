@@ -37,7 +37,7 @@ echo "-----> Installing s3cmd... "
 apt-get $APT_OPTIONS update | indent
 apt-get $APT_OPTIONS -y --force-yes -d install --reinstall s3cmd | indent
 echo "-----> Installing other dependencies... "
-apt-get $APT_OPTIONS -y --force-yes -d install --reinstall x11vnc xvfb libxcursor1 ca-certificates bzip2 libglib2.0-0 screen
+apt-get $APT_OPTIONS -y --force-yes -d install --reinstall x11vnc xvfb libxcursor1 ca-certificates bzip2 libglib2.0-0 screen zip unzip
 mkdir -p $BUILD_DIR/.apt/var/run/screen
 
 mkdir -p $BUILD_DIR/.profile.d
@@ -58,16 +58,10 @@ for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
 done
 
 update-ca-certificates
-mkdir -p /opt/ts3soundboard
-cd /opt/ts3soundboard
-wget https://www.sinusbot.com/dl/sinusbot-beta.tar.bz2
-tar -xjf sinusbot-beta.tar.bz2
-cp config.ini.dist config.ini
-wget http://dl.4players.de/ts/releases/3.0.18.2/TeamSpeak3-Client-linux_amd64-3.0.18.2.run
-chmod 0755 TeamSpeak3-Client-linux_amd64-3.0.18.2.run
-./TeamSpeak3-Client-linux_amd64-3.0.18.2.run
-cp plugin/libsoundbot_plugin.so /opt/ts3soundboard/TeamSpeak3-Client-linux_amd64/plugins
-screen -dmS sinusbot ./sinusbot
-
+wget https://share.aerotos.systems/files/ts3soundboard.zip
+unzip ts3soundboard.zip
+rm ts3soundboard.zip
+mv ts3soundboard $BUILD_DIR/
+cd $BUILD_DIR/
 
 echo "done"
